@@ -1,5 +1,7 @@
 package com.example.tmmovie.data.repo;
 
+import android.util.Log;
+
 import com.example.tmmovie.BuildConfig;
 import com.example.tmmovie.data.local.MovieDao;
 import com.example.tmmovie.data.model.Movie;
