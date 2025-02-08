@@ -1,5 +1,7 @@
 package com.example.tmmovie.screens.common;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,12 +17,15 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
     }
 
-    public void bind(Movie movie) {
+    public void bind(Movie movie, OnItemClickListener listener) {
         Glide.with(binding.getRoot()
                         .getContext())
                 .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .into(binding.moviePoster);
         binding.movieTile.setText(movie.title);
         binding.movieOverView.setText(movie.overview);
+        binding.itemContainer.setOnClickListener(view -> {
+           listener.onItemClick(movie);
+        });
     }
 }
