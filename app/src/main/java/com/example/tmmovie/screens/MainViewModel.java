@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.repo.MovieRepository;
@@ -32,6 +33,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<List<NowPlayingMovie>> _nowPlayingMovieLiveData = new MutableLiveData<>();
     public LiveData<List<NowPlayingMovie>> nowPlayingMovieLiveData = _nowPlayingMovieLiveData;
 
+    public Movie selectedMovie;
 
     @Inject
     public MainViewModel(MovieRepository repository) {

@@ -9,8 +9,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tmmovie.R;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
@@ -18,6 +21,7 @@ import com.example.tmmovie.databinding.FragmentHomeBinding;
 import com.example.tmmovie.screens.MainViewModel;
 import com.example.tmmovie.screens.common.MovieViewAdapter;
 import com.example.tmmovie.screens.common.OnItemClickListener;
+import com.example.tmmovie.screens.detail.DetailFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -63,7 +67,16 @@ public class HomeFragment extends Fragment {
     private final OnItemClickListener itemClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(Movie movie) {
-            Toast.makeText(binding.getRoot().getContext(), "onClick" + movie.title, Toast.LENGTH_SHORT).show();
+            viewModel.selectedMovie = movie;
+            FragmentManager manager = getParentFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            Fragment currentFragment = manager.findFragmentById(R.id.fragmentContainer);
+            if (currentFragment != null) {
+                transaction.hide(currentFragment);
+            }
+            transaction.add(R.id.fragmentContainer, new DetailFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     };
 
