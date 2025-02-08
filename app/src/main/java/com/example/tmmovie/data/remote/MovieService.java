@@ -10,4 +10,8 @@ public interface MovieService {
     @GET("trending/movie/day")
     Single<MovieResponse> getTrendingMovies(@Query("api_key") String apiKey);
 
+    @GET("movie/now_playing")
+    Single<MovieResponse> getNowPlayingMovies(@Query("api_key") String apiKey, @Query("pages") int pages);
+
+
 }

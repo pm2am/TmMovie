@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.databinding.FragmentHomeBinding;
 import com.example.tmmovie.screens.MainViewModel;
@@ -23,7 +24,6 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     private MainViewModel viewModel;
-    MovieViewAdapter<TrendingMovie> trendingViewAdapter;
 
     @Nullable
     @Override
@@ -37,14 +37,20 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         viewModel.loadData();
-        trendingViewAdapter = new MovieViewAdapter<>();
+        MovieViewAdapter<TrendingMovie> trendingViewAdapter = new MovieViewAdapter<>();
         binding.trendingRecyclerView.setAdapter(trendingViewAdapter);
-        viewModel.loadData();
+        MovieViewAdapter<NowPlayingMovie> nowPlayingViewAdapter = new MovieViewAdapter<>();
+        binding.nowPlayingRecyclerView.setAdapter(nowPlayingViewAdapter);
 
-        viewModel.trendingLiveData.observe(getViewLifecycleOwner(), movies -> {
+        viewModel.trendingLiveData.observe(getViewLifecycleOwner(), trendingMovies -> {
             binding.progressCircular.setVisibility(View.INVISIBLE);
-            trendingViewAdapter.setMovieList(movies);
+            trendingViewAdapter.setMovieList(trendingMovies);
             binding.trendingRecyclerView.setVisibility(View.VISIBLE);
+        });
+        viewModel.nowPlayingMovieLiveData.observe(getViewLifecycleOwner(), nowPlayingMovies -> {
+            binding.progressCircular.setVisibility(View.INVISIBLE);
+            nowPlayingViewAdapter.setMovieList(nowPlayingMovies);
+            binding.nowPlayingRecyclerView.setVisibility(View.VISIBLE);
         });
 
     }
@@ -54,6 +60,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         viewModel = null;
-        trendingViewAdapter = null;
     }
 }

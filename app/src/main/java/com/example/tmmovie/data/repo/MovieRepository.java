@@ -6,6 +6,7 @@ import com.example.tmmovie.BuildConfig;
 import com.example.tmmovie.data.local.MovieDao;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.MovieResponse;
+import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.remote.MovieService;
 import com.example.tmmovie.util.MovieMapper;
@@ -47,5 +48,23 @@ public class MovieRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<List<NowPlayingMovie>> getNowPlayingMovies() {
+        return dao.getNowPlayingMovies()
+                .flatMap(movies -> {
+                    if (movies!=null && !movies.isEmpty()) {
+                        return Single.just(movies);
+                    } else {
+                        return service.getNowPlayingMovies(BuildConfig.API_KEY,0)
+                                .map(MovieResponse::getResults)
+                                .map(MovieMapper::mapToNowPlaying)
+                                .flatMap(movies1 -> dao.insertNowPlayingMovies(movies1).andThen(Single.just(movies1))
+                                );
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 
 }

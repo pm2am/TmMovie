@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.tmmovie.data.model.Movie;
+import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 
 import java.util.List;
@@ -20,5 +21,11 @@ public interface MovieDao {
 
     @Query("SELECT * FROM trending_movies")
     Single<List<TrendingMovie>> getTrendingMovies();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertNowPlayingMovies(List<NowPlayingMovie> movies);
+
+    @Query("SELECT * FROM now_playing_movies")
+    Single<List<NowPlayingMovie>> getNowPlayingMovies();
 
 }
