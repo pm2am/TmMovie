@@ -1,4 +1,4 @@
-package com.example.tmmovie.screens.main;
+package com.example.tmmovie.screens.common;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import com.example.tmmovie.databinding.MovieItemViewBinding;
 
 import java.util.List;
 
-public class TrendingViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
-    private List<TrendingMovie> movieList;
+public class MovieViewAdapter<T extends Movie> extends RecyclerView.Adapter<MovieViewHolder> {
+    private List<T> movieList;
 
     @NonNull
     @Override
@@ -38,7 +38,7 @@ public class TrendingViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setMovieList(List<TrendingMovie> movieList) {
+    public void setMovieList(List<T> movieList) {
         this.movieList = movieList;
         notifyDataSetChanged();
     }

@@ -1,4 +1,4 @@
-package com.example.tmmovie.screens.main;
+package com.example.tmmovie.screens;
 
 import android.util.Log;
 
@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.repo.MovieRepository;
 
@@ -14,7 +13,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.HiltAndroidApp;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 

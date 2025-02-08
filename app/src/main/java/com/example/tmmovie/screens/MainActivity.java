@@ -1,4 +1,4 @@
-package com.example.tmmovie.screens.main;
+package com.example.tmmovie.screens;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +11,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tmmovie.R;
+import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.databinding.ActivityMainBinding;
-
-import javax.inject.Inject;
+import com.example.tmmovie.screens.common.MovieViewAdapter;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
 
-    TrendingViewAdapter trendingViewAdapter;
+    MovieViewAdapter<TrendingMovie> trendingViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        trendingViewAdapter = new TrendingViewAdapter();
+        trendingViewAdapter = new MovieViewAdapter<>();
         binding.trendingRecyclerView.setAdapter(trendingViewAdapter);
         viewModel.loadData();
 
