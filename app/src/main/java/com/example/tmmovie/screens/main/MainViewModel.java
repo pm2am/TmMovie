@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tmmovie.data.model.Movie;
+import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.repo.MovieRepository;
 
 import java.util.List;
@@ -26,8 +27,8 @@ public class MainViewModel extends ViewModel {
 
     private final CompositeDisposable disposable;
 
-    private final MutableLiveData<List<Movie>> _trendingMovieLiveData = new MutableLiveData<>();
-    public LiveData<List<Movie>> trendingLiveData = _trendingMovieLiveData;
+    private final MutableLiveData<List<TrendingMovie>> _trendingMovieLiveData = new MutableLiveData<>();
+    public LiveData<List<TrendingMovie>> trendingLiveData = _trendingMovieLiveData;
 
     @Inject
     public MainViewModel(MovieRepository repository) {

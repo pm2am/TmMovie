@@ -4,9 +4,11 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import com.example.tmmovie.data.model.Movie;
+import com.example.tmmovie.data.model.NowPlayingMovie;
+import com.example.tmmovie.data.model.TrendingMovie;
 
 @Database(
-        entities = {Movie.class},
+        entities = {TrendingMovie.class, NowPlayingMovie.class},
         version = 1
 )
 public abstract class MovieDatabase extends RoomDatabase {

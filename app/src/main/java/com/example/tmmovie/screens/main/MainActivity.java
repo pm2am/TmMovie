@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainViewModel viewModel;
 
-    @Inject TrendingViewAdapter trendingViewAdapter;
+    TrendingViewAdapter trendingViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        trendingViewAdapter = new TrendingViewAdapter();
         binding.trendingRecyclerView.setAdapter(trendingViewAdapter);
         viewModel.loadData();
 

@@ -8,12 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tmmovie.data.model.Movie;
+import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.databinding.MovieItemViewBinding;
 
 import java.util.List;
 
 public class TrendingViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
-    private List<Movie> movieList;
+    private List<TrendingMovie> movieList;
 
     @NonNull
     @Override
@@ -37,7 +38,7 @@ public class TrendingViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setMovieList(List<Movie> movieList) {
+    public void setMovieList(List<TrendingMovie> movieList) {
         this.movieList = movieList;
         notifyDataSetChanged();
     }

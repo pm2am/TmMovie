@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.tmmovie.data.model.Movie;
+import com.example.tmmovie.data.model.TrendingMovie;
 
 import java.util.List;
 
@@ -15,9 +16,9 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertMovies(List<Movie> movies);
+    Completable insertTrendingMovies(List<TrendingMovie> movies);
 
-    @Query("SELECT * FROM movies")
-    Single<List<Movie>> getTrendingMovie();
+    @Query("SELECT * FROM trending_movies")
+    Single<List<TrendingMovie>> getTrendingMovies();
 
 }

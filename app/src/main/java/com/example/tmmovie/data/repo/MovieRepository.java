@@ -6,7 +6,9 @@ import com.example.tmmovie.BuildConfig;
 import com.example.tmmovie.data.local.MovieDao;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.MovieResponse;
+import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.remote.MovieService;
+import com.example.tmmovie.util.MovieMapper;
 
 import java.util.List;
 
@@ -29,15 +31,16 @@ public class MovieRepository {
         this.dao = dao;
     }
 
-    public Single<List<Movie>> getTrendingMovies() {
-        return dao.getTrendingMovie()
+    public Single<List<TrendingMovie>> getTrendingMovies() {
+        return dao.getTrendingMovies()
                 .flatMap(movies -> {
                     if (movies!=null && !movies.isEmpty()) {
                         return Single.just(movies);
                     } else {
                         return service.getTrendingMovies(BuildConfig.API_KEY)
                                 .map(MovieResponse::getResults)
-                                .flatMap(moviesList -> dao.insertMovies(moviesList).andThen(Single.just(moviesList))
+                                .map(MovieMapper::mapToTrending)
+                                .flatMap(moviesList -> dao.insertTrendingMovies(moviesList).andThen(Single.just(moviesList))
                                 );
                     }
                 })
