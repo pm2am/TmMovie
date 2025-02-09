@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
@@ -33,6 +34,9 @@ public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<List<NowPlayingMovie>> _nowPlayingMovieLiveData = new MutableLiveData<>();
     public LiveData<List<NowPlayingMovie>> nowPlayingMovieLiveData = _nowPlayingMovieLiveData;
+
+    private final MutableLiveData<List<BookmarkMovie>> _bookmarkMovieLiveData = new MutableLiveData<>();
+    public LiveData<List<BookmarkMovie>> bookmarkMovieLiveData = _bookmarkMovieLiveData;
 
     public Movie selectedMovie;
 
@@ -65,6 +69,17 @@ public class MainViewModel extends ViewModel {
         disposable.add(
                 repository.insertBookmarkMovie(MovieMapper.mapToBookmarkMovie(selectedMovie))
                         .subscribe()
+        );
+    }
+
+    public void loadBookmarkData() {
+        disposable.add(
+                repository.getBookmarkedMovies().subscribe(
+                        _bookmarkMovieLiveData::setValue,
+                        throwable -> {
+                            Log.i(TAG, "onError " + throwable);
+                        }
+                )
         );
     }
 

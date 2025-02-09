@@ -9,6 +9,7 @@ import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.remote.MovieService;
 import com.example.tmmovie.util.MovieMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -68,6 +69,19 @@ public class MovieRepository {
 
     public @NonNull Completable insertBookmarkMovie(BookmarkMovie movie) {
         return dao.insertBookmarkMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<List<BookmarkMovie>> getBookmarkedMovies() {
+        return dao.getBookmarkedMovies()
+                .flatMap(bookmarkMovies -> {
+                    if (bookmarkMovies!=null && !bookmarkMovies.isEmpty()) {
+                        return Single.just(bookmarkMovies);
+                    } else {
+                        return Single.just(new ArrayList<BookmarkMovie>());
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
