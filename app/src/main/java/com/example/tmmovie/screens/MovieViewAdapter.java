@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.databinding.MovieItemViewBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieViewAdapter<T extends Movie> extends RecyclerView.Adapter<MovieViewHolder> {
-    private List<T> movieList;
+    private final List<T> movieList = new ArrayList<>();
     private OnItemClickListener listener;
 
     @NonNull
@@ -39,7 +40,8 @@ public class MovieViewAdapter<T extends Movie> extends RecyclerView.Adapter<Movi
 
     @SuppressLint("NotifyDataSetChanged")
     public void setMovieList(List<T> movieList) {
-        this.movieList = movieList;
+        this.movieList.clear();
+        this.movieList.addAll(movieList);
         notifyDataSetChanged();
     }
 

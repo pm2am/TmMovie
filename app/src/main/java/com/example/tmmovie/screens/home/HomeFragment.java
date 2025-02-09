@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tmmovie.R;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
@@ -22,6 +19,7 @@ import com.example.tmmovie.screens.MovieViewAdapter;
 import com.example.tmmovie.screens.OnItemClickListener;
 import com.example.tmmovie.screens.bookmark.BookmarkFragment;
 import com.example.tmmovie.screens.detail.DetailFragment;
+import com.example.tmmovie.util.NavigationUtils;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -51,7 +49,7 @@ public class HomeFragment extends Fragment {
         nowPlayingViewAdapter.setOnItemClickListener(itemClickListener);
         binding.nowPlayingRecyclerView.setAdapter(nowPlayingViewAdapter);
         binding.bookMarkButton.setOnClickListener(view1 -> {
-            navigateToFragment(new BookmarkFragment());
+            NavigationUtils.navigateToFragment(getParentFragmentManager(), new BookmarkFragment());
         });
 
         viewModel.trendingLiveData.observe(getViewLifecycleOwner(), trendingMovies -> {
@@ -71,21 +69,9 @@ public class HomeFragment extends Fragment {
         @Override
         public void onItemClick(Movie movie) {
             viewModel.selectedMovie = movie;
-            navigateToFragment(new DetailFragment());
+            NavigationUtils.navigateToFragment(getParentFragmentManager(), new DetailFragment());
         }
     };
-
-    private void navigateToFragment(Fragment destinationFragment) {
-        FragmentManager manager = getParentFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        Fragment currentFragment = manager.findFragmentById(R.id.fragmentContainer);
-        if (currentFragment != null) {
-            transaction.hide(currentFragment);
-        }
-        transaction.add(R.id.fragmentContainer, destinationFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     @Override
     public void onDestroyView() {

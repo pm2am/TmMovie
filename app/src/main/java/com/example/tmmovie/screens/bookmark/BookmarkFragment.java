@@ -11,9 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tmmovie.data.model.BookmarkMovie;
+import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.databinding.FragmentBookmarkBinding;
 import com.example.tmmovie.screens.MainViewModel;
 import com.example.tmmovie.screens.MovieViewAdapter;
+import com.example.tmmovie.screens.OnItemClickListener;
+import com.example.tmmovie.screens.detail.DetailFragment;
+import com.example.tmmovie.util.NavigationUtils;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -35,9 +39,17 @@ public class BookmarkFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         viewModel.loadBookmarkData();
         MovieViewAdapter<BookmarkMovie> adapter = new MovieViewAdapter<>();
+        adapter.setOnItemClickListener(itemClickListener);
         binding.bookMarkRecyclerView.setAdapter(adapter);
         viewModel.bookmarkMovieLiveData.observe(getViewLifecycleOwner(), adapter::setMovieList);
     }
 
+    private final OnItemClickListener itemClickListener = new OnItemClickListener() {
+        @Override
+        public void onItemClick(Movie movie) {
+            viewModel.selectedMovie = movie;
+            NavigationUtils.navigateToFragment(getParentFragmentManager(), new DetailFragment());
+        }
+    };
 
 }
