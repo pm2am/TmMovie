@@ -1,5 +1,6 @@
 package com.example.tmmovie.util;
 
+import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
@@ -35,4 +36,15 @@ public class MovieMapper {
         }
         return trendingMovies;
     }
+
+    public static BookmarkMovie mapToBookmarkMovie(Movie movie) {
+        BookmarkMovie bookmarkMovie = new BookmarkMovie();
+        bookmarkMovie.id = movie.id;
+        bookmarkMovie.title = movie.title;
+        bookmarkMovie.posterPath = movie.posterPath;
+        bookmarkMovie.overview = movie.overview;
+        bookmarkMovie.voteAverage = movie.voteAverage;
+        return bookmarkMovie;
+    }
+
 }

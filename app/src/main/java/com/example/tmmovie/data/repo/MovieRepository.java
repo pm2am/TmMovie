@@ -1,10 +1,8 @@
 package com.example.tmmovie.data.repo;
 
-import android.util.Log;
-
 import com.example.tmmovie.BuildConfig;
 import com.example.tmmovie.data.local.MovieDao;
-import com.example.tmmovie.data.model.Movie;
+import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.MovieResponse;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
@@ -17,6 +15,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -62,6 +62,12 @@ public class MovieRepository {
                                 );
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public @NonNull Completable insertBookmarkMovie(BookmarkMovie movie) {
+        return dao.insertBookmarkMovie(movie)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

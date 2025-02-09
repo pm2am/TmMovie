@@ -33,5 +33,8 @@ public class DetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         binding.detailsTextView.setText(viewModel.selectedMovie.title);
+        binding.addBookmarkButton.setOnClickListener(view1 -> {
+            viewModel.onAddBookmarkButtonClicked();
+        });
     }
 }

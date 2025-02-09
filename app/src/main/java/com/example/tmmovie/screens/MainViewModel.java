@@ -10,6 +10,7 @@ import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.repo.MovieRepository;
+import com.example.tmmovie.util.MovieMapper;
 
 import java.util.List;
 
@@ -57,6 +58,13 @@ public class MainViewModel extends ViewModel {
                         }
                 )
 
+        );
+    }
+
+    public void onAddBookmarkButtonClicked() {
+        disposable.add(
+                repository.insertBookmarkMovie(MovieMapper.mapToBookmarkMovie(selectedMovie))
+                        .subscribe()
         );
     }
 
