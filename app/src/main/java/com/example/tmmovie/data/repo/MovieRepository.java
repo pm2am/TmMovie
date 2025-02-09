@@ -86,5 +86,11 @@ public class MovieRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<MovieResponse> getSearchedMovies(String query) {
+        return service.getSearchedMovies(BuildConfig.API_KEY, query)
+                .subscribeOn(Schedulers.io())
+                .onErrorReturn(throwable -> new MovieResponse());
+    }
+
 
 }

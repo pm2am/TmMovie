@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,9 +49,34 @@ public class HomeFragment extends Fragment {
         MovieViewAdapter<NowPlayingMovie> nowPlayingViewAdapter = new MovieViewAdapter<>();
         nowPlayingViewAdapter.setOnItemClickListener(itemClickListener);
         binding.nowPlayingRecyclerView.setAdapter(nowPlayingViewAdapter);
-        binding.bookMarkButton.setOnClickListener(view1 -> {
-            NavigationUtils.navigateToFragment(getParentFragmentManager(), new BookmarkFragment());
+        SearchViewAdapter searchViewAdapter = new SearchViewAdapter();
+        binding.searchRecyclerView.setAdapter(searchViewAdapter);
+
+        binding.searchView.setOnQueryTextFocusChangeListener((view1, b) -> {
+            if (b) {
+                binding.mainContainer.setVisibility(View.INVISIBLE);
+                binding.searchRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                binding.mainContainer.setVisibility(View.VISIBLE);
+                binding.searchRecyclerView.setVisibility(View.INVISIBLE);
+            }
         });
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                viewModel.loadSearch(s);
+                return true;
+            }
+        });
+
+        viewModel.searchedMovieLiveData.observe(getViewLifecycleOwner(), searchViewAdapter::setMovies);
+
+        binding.bookMarkButton.setOnClickListener(view1 -> NavigationUtils.navigateToFragment(getParentFragmentManager(), new BookmarkFragment()));
 
         viewModel.trendingLiveData.observe(getViewLifecycleOwner(), trendingMovies -> {
             binding.progressCircular.setVisibility(View.INVISIBLE);

@@ -1,5 +1,6 @@
 package com.example.tmmovie.screens;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -13,12 +14,18 @@ import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.repo.MovieRepository;
 import com.example.tmmovie.util.MovieMapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 
 @HiltViewModel
 public class MainViewModel extends ViewModel {
@@ -27,7 +34,9 @@ public class MainViewModel extends ViewModel {
 
     private final MovieRepository repository;
 
-    private final CompositeDisposable disposable;
+    private final CompositeDisposable compositeDisposable;
+    private final PublishSubject<String> subject;
+
 
     private final MutableLiveData<List<TrendingMovie>> _trendingMovieLiveData = new MutableLiveData<>();
     public LiveData<List<TrendingMovie>> trendingLiveData = _trendingMovieLiveData;
@@ -38,16 +47,37 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<List<BookmarkMovie>> _bookmarkMovieLiveData = new MutableLiveData<>();
     public LiveData<List<BookmarkMovie>> bookmarkMovieLiveData = _bookmarkMovieLiveData;
 
+    private final MutableLiveData<List<Movie>> _searchedMovieLiveData = new MutableLiveData<>();
+    public LiveData<List<Movie>> searchedMovieLiveData = _searchedMovieLiveData;
+
     public Movie selectedMovie;
 
     @Inject
     public MainViewModel(MovieRepository repository) {
         this.repository = repository;
-        this.disposable = new CompositeDisposable();
+        this.compositeDisposable = new CompositeDisposable();
+        subject = PublishSubject.create();
+        Disposable disposable = subject
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .switchMapSingle(repository::getSearchedMovies)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                            if(response.getResults()!=null) {
+                                _searchedMovieLiveData.postValue(response.getResults());
+                            } else {
+                                _searchedMovieLiveData.postValue(new ArrayList<>());
+                            }
+                        },
+                        throwable -> {
+                            Log.e("API_ERROR", "Error: " + throwable.getMessage());
+                        });
+        compositeDisposable.add(disposable);
+
     }
 
     public void loadData() {
-        disposable.addAll(
+        compositeDisposable.addAll(
                 repository.getTrendingMovies()
                         .subscribe(
                                 _trendingMovieLiveData::setValue,
@@ -66,14 +96,14 @@ public class MainViewModel extends ViewModel {
     }
 
     public void onAddBookmarkButtonClicked() {
-        disposable.add(
+        compositeDisposable.add(
                 repository.insertBookmarkMovie(MovieMapper.mapToBookmarkMovie(selectedMovie))
                         .subscribe()
         );
     }
 
     public void loadBookmarkData() {
-        disposable.add(
+        compositeDisposable.add(
                 repository.getBookmarkedMovies().subscribe(
                         _bookmarkMovieLiveData::setValue,
                         throwable -> {
@@ -83,9 +113,14 @@ public class MainViewModel extends ViewModel {
         );
     }
 
+    @SuppressLint("CheckResult")
+    public void loadSearch(String query) {
+        subject.onNext(query);
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
-        disposable.clear();
+        compositeDisposable.clear();
     }
 }
