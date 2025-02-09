@@ -1,4 +1,4 @@
-package com.example.tmmovie.screens.common;
+package com.example.tmmovie.screens;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tmmovie.data.model.Movie;
-import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.databinding.MovieItemViewBinding;
 
 import java.util.List;

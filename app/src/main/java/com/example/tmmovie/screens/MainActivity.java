@@ -1,7 +1,6 @@
 package com.example.tmmovie.screens;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tmmovie.R;
-import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.databinding.ActivityMainBinding;
-import com.example.tmmovie.screens.common.MovieViewAdapter;
 import com.example.tmmovie.screens.home.HomeFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;

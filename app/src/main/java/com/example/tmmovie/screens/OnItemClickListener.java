@@ -1,4 +1,4 @@
-package com.example.tmmovie.screens.common;
+package com.example.tmmovie.screens;
 
 import com.example.tmmovie.data.model.Movie;
 

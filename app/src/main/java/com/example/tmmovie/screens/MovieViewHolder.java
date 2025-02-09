@@ -1,6 +1,4 @@
-package com.example.tmmovie.screens.common;
-
-import android.widget.Toast;
+package com.example.tmmovie.screens;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
