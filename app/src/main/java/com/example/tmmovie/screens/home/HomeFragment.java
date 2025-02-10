@@ -93,6 +93,7 @@ public class HomeFragment extends Fragment {
         viewModel.errorLiveData.observe(getViewLifecycleOwner(), errorText -> {
             binding.mainContainer.setVisibility(View.GONE);
             binding.searchRecyclerView.setVisibility(View.GONE);
+            binding.searchView.setVisibility(View.GONE);
             binding.errorTextView.setVisibility(View.VISIBLE);
             binding.errorTextView.setText(errorText);
         });
