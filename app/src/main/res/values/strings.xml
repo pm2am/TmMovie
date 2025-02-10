@@ -9,6 +9,7 @@
     <string name="string_share">Share</string>
     <string name="poster">Poster</string>
     <string name="string_rating">Rating</string>
+    <string name="there_are_no_bookmarked_movies_please_add">There are no bookmarked Movies. Please Add</string>
 
 
 </resources>

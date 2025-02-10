@@ -90,6 +90,13 @@ public class HomeFragment extends Fragment {
             binding.nowPlayingContainer.setVisibility(View.VISIBLE);
         });
 
+        viewModel.errorLiveData.observe(getViewLifecycleOwner(), errorText -> {
+            binding.mainContainer.setVisibility(View.GONE);
+            binding.searchRecyclerView.setVisibility(View.GONE);
+            binding.errorTextView.setVisibility(View.VISIBLE);
+            binding.errorTextView.setText(errorText);
+        });
+
     }
 
     private final OnItemClickListener itemClickListener = new OnItemClickListener() {

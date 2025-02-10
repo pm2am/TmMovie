@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tmmovie.R;
 import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.databinding.FragmentBookmarkBinding;
@@ -41,7 +42,13 @@ public class BookmarkFragment extends Fragment {
         MovieViewAdapter<BookmarkMovie> adapter = new MovieViewAdapter<>();
         adapter.setOnItemClickListener(itemClickListener);
         binding.bookMarkRecyclerView.setAdapter(adapter);
-        viewModel.bookmarkMovieLiveData.observe(getViewLifecycleOwner(), adapter::setMovieList);
+        viewModel.bookmarkMovieLiveData.observe(getViewLifecycleOwner(), bookmarkMovies -> {
+            if (bookmarkMovies!=null && !bookmarkMovies.isEmpty()) {
+                adapter.setMovieList(bookmarkMovies);
+            } else {
+                binding.bookmarkTitle.setText(R.string.there_are_no_bookmarked_movies_please_add);
+            }
+        });
     }
 
     private final OnItemClickListener itemClickListener = new OnItemClickListener() {

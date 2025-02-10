@@ -50,8 +50,11 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> _searchedMovieLiveData = new MutableLiveData<>();
     public LiveData<List<Movie>> searchedMovieLiveData = _searchedMovieLiveData;
 
-    public final MutableLiveData<Movie> _selectedMovie = new MutableLiveData<>();
+    private final MutableLiveData<Movie> _selectedMovie = new MutableLiveData<>();
     public LiveData<Movie> selectedMovie = _selectedMovie;
+
+    private final MutableLiveData<String> _errorLiveData = new MutableLiveData<>();
+    public LiveData<String> errorLiveData = _errorLiveData;
 
     @Inject
     public MainViewModel(MovieRepository repository) {
@@ -71,7 +74,7 @@ public class MainViewModel extends ViewModel {
                             }
                         },
                         throwable -> {
-                            Log.e("API_ERROR", "Error: " + throwable.getMessage());
+                            _errorLiveData.setValue("Not Able to Search");
                         });
         compositeDisposable.add(disposable);
 
@@ -83,13 +86,13 @@ public class MainViewModel extends ViewModel {
                         .subscribe(
                                 _trendingMovieLiveData::setValue,
                                 throwable -> {
-                                    Log.i(TAG, "onError"+throwable);
+                                    _errorLiveData.setValue("Not Able to Load data");
                                 }
                         ),
                 repository.getNowPlayingMovies().subscribe(
                         _nowPlayingMovieLiveData::setValue,
                         throwable -> {
-                            Log.i(TAG, "onError " + throwable);
+                            _errorLiveData.setValue("Not Able to load data");
                         }
                 )
 
@@ -132,7 +135,7 @@ public class MainViewModel extends ViewModel {
                         .subscribe(
                                 _selectedMovie::setValue,
                                 throwable -> {
-                                    Log.i(TAG, "onError " + throwable);
+                                    _errorLiveData.setValue("Not Able to get Shared Movie");
                                 }
                         )
         );

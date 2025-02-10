@@ -54,6 +54,14 @@ public class DetailFragment extends Fragment {
             );
             startActivity(shareIntent);
         });
+
+
+        viewModel.errorLiveData.observe(getViewLifecycleOwner(), errorText -> {
+            binding.addBookmarkButton.setVisibility(View.GONE);
+            binding.shareButton.setVisibility(View.GONE);
+            binding.errorTextView.setVisibility(View.VISIBLE);
+            binding.errorTextView.setText(errorText);
+        });
     }
 
     private void loadDetails(Movie movie) {
