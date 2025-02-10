@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
+import com.example.tmmovie.data.model.SharedMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 
 import java.util.List;
@@ -32,7 +33,12 @@ public interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertBookmarkMovie(BookmarkMovie movie);
 
-    @Query("SELECT * FROM bookmark_movie")
+    @Query("SELECT * FROM bookmark_movies")
     Single<List<BookmarkMovie>> getBookmarkedMovies();
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertSharedMovie(SharedMovie movie);
+
+    @Query("SELECT * FROM shared_movies WHERE id=:id")
+    Single<List<SharedMovie>> getSharedMovies(int id);
 }

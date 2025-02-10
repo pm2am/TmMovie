@@ -3,6 +3,7 @@ package com.example.tmmovie.util;
 import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.data.model.NowPlayingMovie;
+import com.example.tmmovie.data.model.SharedMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 
 import java.util.ArrayList;
@@ -47,4 +48,13 @@ public class MovieMapper {
         return bookmarkMovie;
     }
 
+    public static SharedMovie mapToSharedMovie(Movie movie) {
+        SharedMovie sharedMovie = new SharedMovie();
+        sharedMovie.id = movie.id;
+        sharedMovie.title = movie.title;
+        sharedMovie.posterPath = movie.posterPath;
+        sharedMovie.overview = movie.overview;
+        sharedMovie.voteAverage = movie.voteAverage;
+        return sharedMovie;
+    }
 }

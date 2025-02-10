@@ -5,6 +5,7 @@ import com.example.tmmovie.data.local.MovieDao;
 import com.example.tmmovie.data.model.BookmarkMovie;
 import com.example.tmmovie.data.model.MovieResponse;
 import com.example.tmmovie.data.model.NowPlayingMovie;
+import com.example.tmmovie.data.model.SharedMovie;
 import com.example.tmmovie.data.model.TrendingMovie;
 import com.example.tmmovie.data.remote.MovieService;
 import com.example.tmmovie.util.MovieMapper;
@@ -92,5 +93,24 @@ public class MovieRepository {
                 .onErrorReturn(throwable -> new MovieResponse());
     }
 
+    public @NonNull Completable insertSharedMovie(SharedMovie movie) {
+        return dao.insertSharedMovie(movie)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
+    public Single<SharedMovie> getSharedMovie(int id) {
+        return dao.getSharedMovies(id)
+                .flatMap(sharedMovies -> {
+                    if (sharedMovies != null && !sharedMovies.isEmpty()) {
+                        return Single.just(sharedMovies.get(0));
+                    } else {
+                        return service.getMovieById(id, BuildConfig.API_KEY)
+                                .map(MovieMapper::mapToSharedMovie)
+                                .flatMap(movies1 -> dao.insertSharedMovie(movies1).andThen(Single.just(movies1)));
+                    }
+                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

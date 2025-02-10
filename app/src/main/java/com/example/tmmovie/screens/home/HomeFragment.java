@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
     private final OnItemClickListener itemClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(Movie movie) {
-            viewModel.selectedMovie = movie;
+            viewModel.onMovieItemClick(movie);
             NavigationUtils.navigateToFragment(getParentFragmentManager(), new DetailFragment());
         }
     };

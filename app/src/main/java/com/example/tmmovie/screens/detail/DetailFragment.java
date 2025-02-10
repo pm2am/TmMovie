@@ -1,5 +1,6 @@
 package com.example.tmmovie.screens.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +33,25 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        binding.detailsTextView.setText(viewModel.selectedMovie.title);
+        viewModel.selectedMovie.observe(getViewLifecycleOwner(), movie -> {
+            binding.detailsTextView.setText(movie.title);
+        });
+        if (viewModel.selectedMovie.getValue()!=null) {
+            binding.detailsTextView.setText(viewModel.selectedMovie.getValue().title);
+        }
         binding.addBookmarkButton.setOnClickListener(view1 -> {
             viewModel.onAddBookmarkButtonClicked();
+        });
+        binding.shareButton.setOnClickListener(view1 -> {
+            viewModel.onShareButtonClicked();
+            String url = "https://www.tmmovie.app/details?movieId=" + viewModel.selectedMovie.getValue().id;
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, url);
+            intent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(
+                    intent, "Share URL"
+            );
+            startActivity(shareIntent);
         });
     }
 }

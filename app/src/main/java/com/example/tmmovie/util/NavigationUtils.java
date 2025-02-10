@@ -17,4 +17,10 @@ public class NavigationUtils {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+    public static void setStartingFragment(FragmentManager manager, Fragment startingFragment) {
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.fragmentContainer, startingFragment);
+        transaction.commit();
+    }
 }

@@ -50,7 +50,8 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<List<Movie>> _searchedMovieLiveData = new MutableLiveData<>();
     public LiveData<List<Movie>> searchedMovieLiveData = _searchedMovieLiveData;
 
-    public Movie selectedMovie;
+    public final MutableLiveData<Movie> _selectedMovie = new MutableLiveData<>();
+    public LiveData<Movie> selectedMovie = _selectedMovie;
 
     @Inject
     public MainViewModel(MovieRepository repository) {
@@ -97,7 +98,7 @@ public class MainViewModel extends ViewModel {
 
     public void onAddBookmarkButtonClicked() {
         compositeDisposable.add(
-                repository.insertBookmarkMovie(MovieMapper.mapToBookmarkMovie(selectedMovie))
+                repository.insertBookmarkMovie(MovieMapper.mapToBookmarkMovie(selectedMovie.getValue()))
                         .subscribe()
         );
     }
@@ -116,6 +117,29 @@ public class MainViewModel extends ViewModel {
     @SuppressLint("CheckResult")
     public void loadSearch(String query) {
         subject.onNext(query);
+    }
+
+    public void onShareButtonClicked() {
+        compositeDisposable.add(
+                repository.insertSharedMovie(MovieMapper.mapToSharedMovie(selectedMovie.getValue()))
+                        .subscribe()
+        );
+    }
+
+    public void loadSharedDataWithId(int id) {
+        compositeDisposable.add(
+                repository.getSharedMovie(id)
+                        .subscribe(
+                                _selectedMovie::setValue,
+                                throwable -> {
+                                    Log.i(TAG, "onError " + throwable);
+                                }
+                        )
+        );
+    }
+
+    public void onMovieItemClick(Movie movie) {
+        _selectedMovie.setValue(movie);
     }
 
     @Override
