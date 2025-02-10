@@ -1,5 +1,6 @@
 package com.example.tmmovie.screens.home;
 
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.databinding.SearchItemViewBinding;
+import com.example.tmmovie.screens.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.SearchViewHolder> {
 
     private List<Movie> movieList = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -30,7 +34,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Se
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-        holder.bind(movieList.get(position));
+        holder.bind(movieList.get(position), listener);
     }
 
     @Override
@@ -44,6 +48,11 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Se
         notifyDataSetChanged();
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
     static class SearchViewHolder extends RecyclerView.ViewHolder {
 
         private final SearchItemViewBinding binding;
@@ -52,7 +61,12 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Se
             this.binding = binding;
         }
 
-        public void bind(Movie movie) {
+        public void bind(Movie movie, OnItemClickListener listener) {
+            binding.searchItemContainer.setOnClickListener(view -> {
+                binding.searchItemContainer.postDelayed(() -> {
+                    listener.onItemClick(movie);
+                }, 500);
+            });
             binding.searchedTitle.setText(movie.title);
         }
     }

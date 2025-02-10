@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
         nowPlayingViewAdapter.setOnItemClickListener(itemClickListener);
         binding.nowPlayingRecyclerView.setAdapter(nowPlayingViewAdapter);
         SearchViewAdapter searchViewAdapter = new SearchViewAdapter();
+        searchViewAdapter.setOnItemClickListener(itemClickListener);
         binding.searchRecyclerView.setAdapter(searchViewAdapter);
 
         binding.searchView.setOnQueryTextFocusChangeListener((view1, b) -> {

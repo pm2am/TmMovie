@@ -23,7 +23,9 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         binding.movieTile.setText(movie.title);
         binding.movieOverView.setText(movie.overview);
         binding.itemContainer.setOnClickListener(view -> {
-           listener.onItemClick(movie);
+            binding.itemContainer.postDelayed(() -> {
+                listener.onItemClick(movie);
+            }, 500);
         });
     }
 }

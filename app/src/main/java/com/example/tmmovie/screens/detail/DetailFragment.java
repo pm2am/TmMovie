@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.databinding.FragmentDetailBinding;
 import com.example.tmmovie.screens.MainViewModel;
 
@@ -33,11 +35,9 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        viewModel.selectedMovie.observe(getViewLifecycleOwner(), movie -> {
-            binding.detailsTextView.setText(movie.title);
-        });
+        viewModel.selectedMovie.observe(getViewLifecycleOwner(), this::loadDetails);
         if (viewModel.selectedMovie.getValue()!=null) {
-            binding.detailsTextView.setText(viewModel.selectedMovie.getValue().title);
+            loadDetails(viewModel.selectedMovie.getValue());
         }
         binding.addBookmarkButton.setOnClickListener(view1 -> {
             viewModel.onAddBookmarkButtonClicked();
@@ -53,5 +53,15 @@ public class DetailFragment extends Fragment {
             );
             startActivity(shareIntent);
         });
+    }
+
+    private void loadDetails(Movie movie) {
+        binding.movieTile.setText(movie.title);
+        Glide.with(binding.getRoot()
+                        .getContext())
+                .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
+                .into(binding.moviePoster);
+        binding.movieTile.setText(movie.title);
+        binding.movieOverView.setText(movie.overview);
     }
 }

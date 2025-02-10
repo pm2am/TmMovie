@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TmMovie</string>
+    <string name="string_trending">Trending</string>
+    <string name="string_now_playing">Now Playing</string>
+    <string name="bookmarked_movies">Bookmarked Movies</string>
+
+    <string name="string_details">Details</string>
+    <string name="string_add">Add</string>
+    <string name="string_share">Share</string>
+    <string name="poster">Poster</string>
+
+
 </resources>
