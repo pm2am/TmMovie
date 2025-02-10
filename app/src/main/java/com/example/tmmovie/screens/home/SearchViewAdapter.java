@@ -65,7 +65,7 @@ public class SearchViewAdapter extends RecyclerView.Adapter<SearchViewAdapter.Se
             binding.searchItemContainer.setOnClickListener(view -> {
                 binding.searchItemContainer.postDelayed(() -> {
                     listener.onItemClick(movie);
-                }, 500);
+                }, 300);
             });
             binding.searchedTitle.setText(movie.title);
         }

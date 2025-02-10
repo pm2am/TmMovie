@@ -25,12 +25,21 @@
         app:layout_constraintTop_toBottomOf="@id/movieTile"
         />
 
+
+    <TextView
+        android:id="@+id/movieRating"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/moviePoster"/>
+
     <TextView
         android:id="@+id/movieOverView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moviePoster"/>
+        app:layout_constraintTop_toBottomOf="@id/movieRating"/>
 
     <Button
         android:id="@+id/addBookmarkButton"

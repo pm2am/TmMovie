@@ -21,11 +21,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
                 .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .into(binding.moviePoster);
         binding.movieTile.setText(movie.title);
-        binding.movieOverView.setText(movie.overview);
+        binding.movieRating.setText(movie.voteAverage);
         binding.itemContainer.setOnClickListener(view -> {
             binding.itemContainer.postDelayed(() -> {
                 listener.onItemClick(movie);
-            }, 500);
+            }, 300);
         });
     }
 }

@@ -4,16 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/itemContainer"
     android:background="@drawable/ripple_background"
-    android:layout_width="300dp"
+    android:padding="10dp"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/movieTile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/moviePoster"
@@ -23,14 +16,25 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movieTile"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
-        android:id="@+id/movieOverView"
-        android:layout_width="match_parent"
+        android:id="@+id/movieTile"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/movieRating"
         app:layout_constraintTop_toBottomOf="@id/moviePoster"/>
+
+
+    <TextView
+        android:id="@+id/movieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/movieTile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/moviePoster"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

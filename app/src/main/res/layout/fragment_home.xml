@@ -57,7 +57,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bookMarkButton"
-            app:layout_constraintHeight_percent="0.5">
+            app:layout_constraintHeight_percent="0.45">
 
             <TextView
                 android:text="@string/string_trending"
@@ -69,6 +69,7 @@
                 android:id="@+id/trendingRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>
@@ -79,11 +80,12 @@
             android:layout_height="0dp"
             android:visibility="gone"
             android:orientation="vertical"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_corner_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trendingContainer"
-            app:layout_constraintHeight_percent="0.5">
+            app:layout_constraintHeight_percent="0.45">
 
             <TextView
                 android:text="@string/string_now_playing"
@@ -95,6 +97,7 @@
                 android:id="@+id/nowPlayingRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </LinearLayout>

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.example.tmmovie.R;
 import com.example.tmmovie.data.model.Movie;
 import com.example.tmmovie.databinding.FragmentDetailBinding;
 import com.example.tmmovie.screens.MainViewModel;
@@ -61,6 +62,7 @@ public class DetailFragment extends Fragment {
                         .getContext())
                 .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                 .into(binding.moviePoster);
+        binding.movieRating.setText(getString(R.string.string_rating) + ": " + movie.voteAverage);
         binding.movieTile.setText(movie.title);
         binding.movieOverView.setText(movie.overview);
     }
