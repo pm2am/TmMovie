@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#58C468"
+    android:paddingHorizontal="10dp"
     tools:context=".screens.MainActivity">
 
     <SearchView
@@ -19,11 +21,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:visibility="visible"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchView">
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/bookMarkButton"
@@ -42,27 +46,55 @@
             app:layout_constraintTop_toBottomOf="@id/bookMarkButton"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trendingRecyclerView"
+        <LinearLayout
+            android:id="@+id/trendingContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:visibility="gone"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bookMarkButton" />
+            app:layout_constraintTop_toBottomOf="@id/bookMarkButton"
+            app:layout_constraintHeight_percent="0.5">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nowPlayingRecyclerView"
+            <TextView
+                android:text="Trending"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trendingRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nowPlayingContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:visibility="gone"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/trendingRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@id/trendingContainer"
+            app:layout_constraintHeight_percent="0.5">
+
+            <TextView
+                android:text="Now Playing"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nowPlayingRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

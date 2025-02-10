@@ -81,12 +81,12 @@ public class HomeFragment extends Fragment {
         viewModel.trendingLiveData.observe(getViewLifecycleOwner(), trendingMovies -> {
             binding.progressCircular.setVisibility(View.INVISIBLE);
             trendingViewAdapter.setMovieList(trendingMovies);
-            binding.trendingRecyclerView.setVisibility(View.VISIBLE);
+            binding.trendingContainer.setVisibility(View.VISIBLE);
         });
         viewModel.nowPlayingMovieLiveData.observe(getViewLifecycleOwner(), nowPlayingMovies -> {
             binding.progressCircular.setVisibility(View.INVISIBLE);
             nowPlayingViewAdapter.setMovieList(nowPlayingMovies);
-            binding.nowPlayingRecyclerView.setVisibility(View.VISIBLE);
+            binding.nowPlayingContainer.setVisibility(View.VISIBLE);
         });
 
     }
